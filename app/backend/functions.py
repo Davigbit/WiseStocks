@@ -52,7 +52,7 @@ def plot_last_30_days(column_name):
         )
     )
     fig.show()
-    file_path = f'./images/{column_name}_last_30_days'
+    file_path = f'../static/graphs/{column_name}_last_30_days'
     pio.write_html(fig, f'{file_path}.html')
 
     png_path = f'{file_path}.png'
@@ -102,7 +102,7 @@ def predict_curve_7_days(column_name):
         )
     )
     fig.show()
-    file_path = f'./images/{column_name}_next_7_days'
+    file_path = f'../static/graphs/{column_name}_next_7_days'
 
     pio.write_html(fig, f'{file_path}.html')
 
