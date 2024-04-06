@@ -11,7 +11,6 @@ def regression_report(Y, y_pred):
     mae = mean_absolute_error(Y, y_pred)
     mse = mean_squared_error(Y, y_pred)
     rmse = np.sqrt(mse)
-    r2 = r2_score(Y, y_pred)
     print(f"Mean Absolute Error (MAE): {mae:.2f}")
     print(f"Mean Squared Error (MSE): {mse:.2f}")
     print(f"Root Mean Squared Error (RMSE): {rmse:.2f}")
@@ -49,6 +48,17 @@ def predict_curve_7_days(column_name):
                       yaxis_title=f'{column_name} (CAD)',
                       xaxis_rangeslider_visible=True)
     fig.show()
+
+def values_curve_7_days(column_name):
+    X = joblib.load(f'./pkls/linear_test_{column_name}.pkl')
+    X.index = X.index + pd.DateOffset(days=7)
+    today_value = joblib.load(f'./pkls/todayvalue_{column_name}.pkl')
+    Y_pred = predict_curve(X, column_name)
+    values = []
+    for i in range(len(Y_pred)):
+        values.append(today_value)
+        today_value += Y_pred[i]
+    return X.index, values
 
 def regression_training(stock):
     data = joblib.load(f'./pkls/linear_{stock}.pkl')
