@@ -22,6 +22,7 @@
     }
     .col{
         padding: 1%;
+        height: 5vw;
         
     }
     
