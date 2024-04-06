@@ -11,10 +11,18 @@
     justify-content: space-around;
     align-items: center;
     margin-bottom: 20px;
+    flex-wrap: wrap;
   }
   .chart-box {
     width: 50%;
     text-align: center;
+  }
+  .change-text {
+    width: 100%;
+    text-align: center;
+    font-style: bold;
+    font-size: 24px;
+    color: #333333;
   }
   canvas {
     width: 100% !important;
@@ -25,6 +33,7 @@
 <body>
 
 <div class="chart-container">
+  <div class="change-text" id="NAChangeText"></div>
   <div class="chart-box">
       <h3>NA 30-Day Results</h3>
       <canvas id="NA30DayChart"></canvas>
@@ -36,6 +45,7 @@
 </div>
 
 <div class="chart-container">
+  <div class="change-text" id="SUChangeText"></div>
   <div class="chart-box">
       <h3>SU 30-Day Results</h3>
       <canvas id="SU30DayChart"></canvas>
@@ -47,6 +57,7 @@
 </div>
 
 <div class="chart-container">
+  <div class="change-text" id="BCEChangeText"></div>
   <div class="chart-box">
       <h3>BCE 30-Day Results</h3>
       <canvas id="BCE30DayChart"></canvas>
@@ -58,6 +69,7 @@
 </div>
 
 <div class="chart-container">
+  <div class="change-text" id="IMOChangeText"></div>
   <div class="chart-box">
       <h3>IMO 30-Day Results</h3>
       <canvas id="IMO30DayChart"></canvas>
@@ -94,16 +106,27 @@ function createChart(chartId, label, dataLabels, dataValues) {
     });
 }
 
+function updateChangeText(containerId, change) {
+    const changeTextElement = document.getElementById(containerId);
+
+    if(change >= 0) {
+        changeTextElement.textContent = `Change: +${change.toFixed(2)}%`;
+        changeTextElement.style.color = 'green';
+    } else {
+        changeTextElement.textContent = `Change: ${change.toFixed(2)}%`;
+        changeTextElement.style.color = 'red';
+    }
+}
+
 fetch('../jsons/dataset.json')
 .then(response => response.json())
 .then(data => {
-
     Object.entries(data).forEach(([key, value]) => {
 
         createChart(`${key}30DayChart`, `${key} 30-Day Results`, value.thirty_days[0], value.thirty_days[1]);
-
         createChart(`${key}7DayChart`, `${key} 7-Day Results`, value.seven_days[0], value.seven_days[1]);
 
+        updateChangeText(`${key}ChangeText`, value.today_change);
     });
 })
 .catch(error => console.error('Error loading the dataset:', error));
