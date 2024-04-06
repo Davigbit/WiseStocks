@@ -30,14 +30,24 @@ def plot_last_30_days(column_name):
     last_30_days = joblib.load(f'./pkls/first_30_days_{column_name}.pkl')
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=last_30_days.index, y=last_30_days.values,
-                             mode='lines+markers', name=column_name))
-    fig.update_layout(title=f'Last 30 Days of {column_name}',
-                      xaxis_title='Date',
-                      yaxis_title=f'{column_name} (CAD)',
-                      xaxis_rangeslider_visible=True)
-
+                             mode='lines+markers', name=column_name,
+                             line=dict(width=3, color='royalblue'),
+                             marker=dict(size=7, color='lightseagreen')))
+    
+    fig.update_layout(
+        title=f'Last 30 Days of {column_name}',
+        xaxis_title='Date',
+        yaxis_title=f'{column_name} (CAD)',
+        xaxis_rangeslider_visible=True,
+        template='plotly_white',
+        font=dict(
+            family="Arial, sans-serif",
+            size=14,
+            color="RebeccaPurple"
+        )
+    )
+    
     file_path = f'./images/{column_name}_last_30_days'
-
     pio.write_html(fig, f'{file_path}.html')
 
     png_path = f'{file_path}.png'
@@ -45,18 +55,14 @@ def plot_last_30_days(column_name):
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
     options.add_argument('--disable-gpu')
-    options.add_argument('--window-size=1920x1080')
-
+    options.add_argument('--window-size=1200x800')
     driver = webdriver.Chrome(options=options)
-
     html_path = os.path.abspath(f'{file_path}.html')
-
     driver.get(f'file:///{html_path}')
 
     time.sleep(4)
 
     driver.save_screenshot(f'{png_path}')
-
     driver.quit()
     
 
@@ -69,11 +75,22 @@ def predict_curve_7_days(column_name):
     for i in range(len(Y_pred)):
         values.append(today_value)
         today_value += Y_pred[i]
-    fig = go.Figure([go.Scatter(x=X.index, y=values)])
-    fig.update_layout(title=f'Next 7 Days of {column_name}',
-                      xaxis_title='Date',
-                      yaxis_title=f'{column_name} (CAD)',
-                      xaxis_rangeslider_visible=True)
+    fig = go.Figure([go.Scatter(x=X.index, y=values, mode='lines+markers', 
+                                line=dict(width=4, color='royalblue'), 
+                                marker=dict(size=7, color='lightseagreen'))])
+    
+    fig.update_layout(
+        title=f'Next 7 Days of {column_name}',
+        xaxis_title='Date',
+        yaxis_title=f'{column_name} (CAD)',
+        xaxis_rangeslider_visible=True,
+        template='plotly_white',
+        font=dict(
+            family="Arial, sans-serif",
+            size=14,
+            color="RebeccaPurple"
+        )
+    )
     fig.show()
     file_path = f'./images/{column_name}_next_7_days'
 
@@ -84,7 +101,7 @@ def predict_curve_7_days(column_name):
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
     options.add_argument('--disable-gpu')
-    options.add_argument('--window-size=1920x1080')
+    options.add_argument('--window-size=1200x800')
 
     driver = webdriver.Chrome(options=options)
 
