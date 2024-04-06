@@ -66,6 +66,7 @@ joblib.dump(df_linear['NA'][0], './pkls/todayvalue_NA.pkl')
 joblib.dump(df_linear['NA'].head(30), './pkls/first_30_days_NA.pkl')
 
 df_linear['NA Change'] = df_linear['NA'].diff()
+joblib.dump(df_linear['NA Change'][1], './pkls/todaychange_NA.pkl')
 df_linear.drop(['NA'], axis=1, inplace=True)
 
 df_test = df_linear.head(7).copy()
@@ -97,6 +98,7 @@ joblib.dump(df_linear['SU'][0], './pkls/todayvalue_SU.pkl')
 joblib.dump(df_linear['SU'].head(30), './pkls/first_30_days_SU.pkl')
 
 df_linear['SU Change'] = df_linear['SU'].diff()
+joblib.dump(df_linear['SU Change'][1], './pkls/todaychange_SU.pkl')
 df_linear.drop(['SU'], axis=1, inplace=True)
 
 df_test = df_linear.head(7).copy()
@@ -127,6 +129,7 @@ joblib.dump(df_linear['BCE'][0], './pkls/todayvalue_BCE.pkl')
 joblib.dump(df_linear['BCE'].head(30), './pkls/first_30_days_BCE.pkl')
 
 df_linear['BCE Change'] = df_linear['BCE'].diff()
+joblib.dump(df_linear['BCE Change'][1], './pkls/todaychange_BCE.pkl')
 df_linear.drop(['BCE'], axis=1, inplace=True)
 
 df_test = df_linear.head(7).copy()
@@ -157,6 +160,7 @@ joblib.dump(df_linear['IMO'][0], './pkls/todayvalue_IMO.pkl')
 joblib.dump(df_linear['IMO'].head(30), './pkls/first_30_days_IMO.pkl')
 
 df_linear['IMO Change'] = df_linear['IMO'].diff()
+joblib.dump(df_linear['IMO Change'][1], './pkls/todaychange_IMO.pkl')
 df_linear.drop(['IMO'], axis=1, inplace=True)
 
 df_test = df_linear.head(7).copy()
