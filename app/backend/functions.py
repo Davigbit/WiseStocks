@@ -86,7 +86,7 @@ def predict_curve_7_days(column_name):
     
     fig.update_layout(
         title={
-            'text': f'Last 30 Days of {column_name}',
+            'text': f'Next 7 Days of {column_name}',
             'y':0.9,
             'x':0.5,
             'xanchor': 'center',
