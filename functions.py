@@ -35,18 +35,23 @@ def plot_last_30_days(column_name):
                              marker=dict(size=7, color='lightseagreen')))
     
     fig.update_layout(
-        title=f'Last 30 Days of {column_name}',
+        title={
+            'text': f'Last 30 Days of {column_name}',
+            'y':0.9,
+            'x':0.5,
+            'xanchor': 'center',
+            'yanchor': 'top'},
         xaxis_title='Date',
         yaxis_title=f'{column_name} (CAD)',
-        xaxis_rangeslider_visible=True,
+        xaxis_rangeslider_visible=False,
         template='plotly_white',
         font=dict(
             family="Arial, sans-serif",
-            size=14,
+            size=24,
             color="RebeccaPurple"
         )
     )
-    
+    fig.show()
     file_path = f'./images/{column_name}_last_30_days'
     pio.write_html(fig, f'{file_path}.html')
 
@@ -80,14 +85,19 @@ def predict_curve_7_days(column_name):
                                 marker=dict(size=7, color='lightseagreen'))])
     
     fig.update_layout(
-        title=f'Next 7 Days of {column_name}',
+        title={
+            'text': f'Last 30 Days of {column_name}',
+            'y':0.9,
+            'x':0.5,
+            'xanchor': 'center',
+            'yanchor': 'top'},
         xaxis_title='Date',
         yaxis_title=f'{column_name} (CAD)',
-        xaxis_rangeslider_visible=True,
+        xaxis_rangeslider_visible=False,
         template='plotly_white',
         font=dict(
             family="Arial, sans-serif",
-            size=14,
+            size=24,
             color="RebeccaPurple"
         )
     )
