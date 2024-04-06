@@ -1,11 +1,15 @@
 import numpy as np
-from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+from sklearn.metrics import mean_squared_error, mean_absolute_error
 import joblib
 import plotly.graph_objects as go
 import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
+import os
+import time
+from selenium import webdriver
+import plotly.io as pio
 
 def regression_report(Y, y_pred):
     mae = mean_absolute_error(Y, y_pred)
@@ -31,7 +35,30 @@ def plot_last_30_days(column_name):
                       xaxis_title='Date',
                       yaxis_title=f'{column_name} (CAD)',
                       xaxis_rangeslider_visible=True)
-    fig.show()
+
+    file_path = f'./images/{column_name}_last_30_days'
+
+    pio.write_html(fig, f'{file_path}.html')
+
+    png_path = f'{file_path}.png'
+
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--window-size=1920x1080')
+
+    driver = webdriver.Chrome(options=options)
+
+    html_path = os.path.abspath(f'{file_path}.html')
+
+    driver.get(f'file:///{html_path}')
+
+    time.sleep(4)
+
+    driver.save_screenshot(f'{png_path}')
+
+    driver.quit()
+    
 
 def predict_curve_7_days(column_name):
     X = joblib.load(f'./pkls/linear_test_{column_name}.pkl')
@@ -48,17 +75,28 @@ def predict_curve_7_days(column_name):
                       yaxis_title=f'{column_name} (CAD)',
                       xaxis_rangeslider_visible=True)
     fig.show()
+    file_path = f'./images/{column_name}_next_7_days'
 
-def values_curve_7_days(column_name):
-    X = joblib.load(f'./pkls/linear_test_{column_name}.pkl')
-    X.index = X.index + pd.DateOffset(days=7)
-    today_value = joblib.load(f'./pkls/todayvalue_{column_name}.pkl')
-    Y_pred = predict_curve(X, column_name)
-    values = []
-    for i in range(len(Y_pred)):
-        values.append(today_value)
-        today_value += Y_pred[i]
-    return X.index, values
+    pio.write_html(fig, f'{file_path}.html')
+
+    png_path = f'{file_path}.png'
+
+    options = webdriver.ChromeOptions()
+    options.add_argument('--headless')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--window-size=1920x1080')
+
+    driver = webdriver.Chrome(options=options)
+
+    html_path = os.path.abspath(f'{file_path}.html')
+
+    driver.get(f'file:///{html_path}')
+
+    time.sleep(4)
+
+    driver.save_screenshot(f'{png_path}')
+
+    driver.quit()
 
 def regression_training(stock):
     data = joblib.load(f'./pkls/linear_{stock}.pkl')
