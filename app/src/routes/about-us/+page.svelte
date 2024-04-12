@@ -54,6 +54,12 @@
     News API that would display the most recent news articles related to the
     stock.
   </p>
+
+  <h2>Team</h2>
+
+  <p>
+    Bowen Dai, Davi Gava Bittencourt, Flavie Qin, and Simona-Elena Lungoci.
+  </p>
 </div>
 
 <styl> 

@@ -13,5 +13,5 @@ for column_name in ['NA', 'SU', 'BCE', 'IMO']:
     DATASET[f'{column_name}'] = dict
 DATASET = json.dumps(DATASET)
 
-with open('./jsons/dataset.json', 'w') as f:
+with open('../static/dataset.json', 'w') as f:
     f.write(DATASET)
